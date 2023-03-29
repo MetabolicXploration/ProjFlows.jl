@@ -1,6 +1,6 @@
 name = "ProjFlows"
 uuid = "cac8b402-4888-4912-9502-a4f91500dd77"
-authors = ["josePereiro <jose.pereiro.personal@gmail.com> and contributors"]
+authors = ["The members of MetabolicXploration"]
 version = "0.1.0"
 
 [deps]
