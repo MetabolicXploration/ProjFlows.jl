@@ -1,7 +1,6 @@
 # TODO: Wait for 'DataFileNames' update to add a DataFileNamer object per project
 
-# TODO: make a `withdat` method which have several modes [:set!, :get, :get!, :none]
-# which takes a function and interact with a file depending on the mode (save/load/etc)
+# TODO: Think on a WIP feature
 
 module ProjFlows
 
