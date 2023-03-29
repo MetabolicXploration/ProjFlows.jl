@@ -2,6 +2,8 @@
 
 # TODO: Think on a WIP feature
 
+# TODO: remove the dependencies on DrWatson (currently using only the tag feature)
+
 module ProjFlows
 
     import DrWatson
