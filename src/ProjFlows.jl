@@ -4,6 +4,10 @@
 
 # TODO: remove the dependencies on DrWatson (currently using only the tag feature)
 
+# TODO: Add optional tags to cache
+
+# TODO: Integrate ContextDBs
+
 module ProjFlows
 
     import DrWatson
