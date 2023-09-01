@@ -114,10 +114,10 @@ function withdat(f::Function, mode::Symbol, arg, args...;
         return sdat(f, datfile; print_fun, addtag, save_fun, mkdir, verbose, msg)
     elseif mode == :read || mode == :load
         return ldat(datfile; print_fun, load_fun, mkdir, verbose, msg)
-    elseif mode == :noread
-        return (datfile, f())
+    elseif mode == :noread || mode == :dry
+        return ("", f())
     end
-    error("invalid mode: valids are [:get, :get!, :set!/:write!/:save!, :read/:load, :noread]")
+    error("invalid mode: valids are [:get, :get!, :set!/:write!/:save!, :read/:load, :noread/:dry]")
 end
 
 withdat(dat::Any, mode::Symbol, arg, args...; kwargs...) = withdat(() -> dat, mode, arg, args...; kwargs...)
