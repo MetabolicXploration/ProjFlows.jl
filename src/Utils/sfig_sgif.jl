@@ -1,9 +1,9 @@
 _sfig(x...; k...) = isdefined(ProjFlows, :ImgTools) ? 
-    ImgTools.sfig(x...; k...) : error("You must 'import Plots'")
+    ImgTools.sfig(x...; k...) : error("You must 'import ImgTools'")
 _sgif(x...; k...) = isdefined(ProjFlows, :ImgTools) ? 
-    ImgTools.sgif(x...; k...) : error("You must 'import Plots'")
+    ImgTools.sgif(x...; k...) : error("You must 'import ImgTools'")
 _lfig(x...) = isdefined(ProjFlows, :ImgTools) ? 
-    ImgTools.lfig(x...) : error("You must 'import Plots'")
+    ImgTools.lfig(x...) : error("You must 'import ImgTools'")
 
 
 lfig(x...) = _lfig(x...)

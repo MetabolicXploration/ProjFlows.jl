@@ -17,6 +17,7 @@ module ProjFlows
     import FileIO
     import Requires: @require
     import Pkg
+    import ImgTools
     using ExtractMacro
     using Base.Threads
     
@@ -55,15 +56,23 @@ module ProjFlows
     @_exportall_non_underscore()
 
     function __init__()
-        @require Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80" begin
-            import ImgTools
-        end
-        @require CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0" begin
-            import ImgTools
-        end
-        @require Makie = "ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a" begin
-            import ImgTools
-        end
+        # TODO: do not load Plot packages if not required (not working now)
+        # @require ImgTools = "60a16571-0043-4368-b1b0-a5366d36b020" begin
+        #     println("ImgTools")
+        #     @eval import ImgTools
+        # end
+        # @require Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80" begin
+        #     println("Plots")
+        #     @eval import ImgTools
+        # end
+        # @require CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0" begin
+        #     println("CairoMakie")
+        #     @eval import ImgTools
+        # end
+        # @require Makie = "ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a" begin
+        #     println("Makie")
+        #     @eval import ImgTools
+        # end
     end
 
 end
