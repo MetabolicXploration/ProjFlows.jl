@@ -8,12 +8,22 @@ function Base.lock(f::Function, p::AbstractProject; kwargs...)
     lkf = getlock(p)
     isnothing(lkf) && return f() # ignore locking
     mkpath(dirname(lkf))
-    return mkpidlock(f, lkf; kwargs...)
+    pid, host, _ = Pidfile.parse_pidfile(lkf)
+    Pidfile.isvalidpid(host, pid) || rm(lkf; force = true)
+    lk = mkpidlock(lkf; kwargs...) 
+    try
+        p.extras["_Pidfile.LockMonitor"] = lk
+        return f()
+    finally
+        close(lk)
+    end
 end
 function Base.lock(p::AbstractProject; kwargs...) 
     lkf = getlock(p)
     isnothing(lkf) && return # ignore locking 
     mkpath(dirname(lkf))
+    pid, host, _ = Pidfile.parse_pidfile(lkf)
+    Pidfile.isvalidpid(host, pid) || rm(lkf; force = true)
     lk = mkpidlock(lkf; kwargs...)
     p.extras["_Pidfile.LockMonitor"] = lk
     return p
@@ -26,14 +36,9 @@ function Base.islocked(p::AbstractProject)
     # check mine
     lk = get(p.extras, "_Pidfile.LockMonitor", nothing)
     !isnothing(lk) && isopen(lk.fd) && return true 
-    # check other
-    lk = Pidfile.tryopen_exclusive(lkf)
-    if isnothing(lk)
-        rm(lkf; force = true)
-        return true
-    end
-    close(lk)
-    return false
+    # check others
+    pid, host, _ = Pidfile.parse_pidfile(lkf)
+    return Pidfile.isvalidpid(host, pid)
 end
 
 import Base.unlock
