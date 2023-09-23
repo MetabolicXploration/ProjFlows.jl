@@ -2,11 +2,15 @@
 
 # TODO: Think on a WIP feature
 
-# TODO: remove the dependencies on DrWatson (currently using only the tag feature)
+# TODO: remove the dependencies on DrWatson (currently using only the git tag feature)
 
 # TODO: Add optional tags to cache
 
 # TODO: Integrate ContextDBs
+
+# TODO: Integrate BlobBatches
+
+# DONE: using Pidfile
 
 module ProjFlows
 
@@ -20,6 +24,7 @@ module ProjFlows
     import ImgTools
     using ExtractMacro
     using Base.Threads
+    using FileWatching.Pidfile
     
     using FilesTreeTools
     using DataFileNames
@@ -35,6 +40,7 @@ module ProjFlows
     #! include AbstractProjectBase
     include("AbstractProjectBase/base.jl")
     include("AbstractProjectBase/extras_interface.jl")
+    include("AbstractProjectBase/lock.jl")
     include("AbstractProjectBase/projdirs_interface.jl")
     include("AbstractProjectBase/save_load.jl")
     
