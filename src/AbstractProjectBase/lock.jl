@@ -6,12 +6,14 @@ setlock!(p::AbstractProject) = setlock!(p, _pidfile(p))
 import Base.lock
 function Base.lock(f::Function, p::AbstractProject; kwargs...) 
     lkf = getlock(p)
-    isnothing(lkf) && return f() # ignore locking 
+    isnothing(lkf) && return f() # ignore locking
+    mkpath(dirname(lkf))
     return mkpidlock(f, lkf; kwargs...)
 end
 function Base.lock(p::AbstractProject; kwargs...) 
     lkf = getlock(p)
     isnothing(lkf) && return # ignore locking 
+    mkpath(dirname(lkf))
     lk = mkpidlock(lkf; kwargs...)
     p.extras["_Pidfile.LockMonitor"] = lk
     return p
