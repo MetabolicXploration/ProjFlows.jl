@@ -3,13 +3,24 @@ getlock(p::AbstractProject) = get!(() -> _pidfile(p), p.extras, "_getlock")
 setlock!(p::AbstractProject, lock) = setindex!(p.extras, lock, "_getlock")
 setlock!(p::AbstractProject) = setlock!(p, _pidfile(p))
 
+function _isvalid_pidfile(lkf)
+    pid, host, _ = Pidfile.parse_pidfile(lkf)
+    return Pidfile.isvalidpid(host, pid)
+end
+
+function _its_mypid(lkf)
+    pid, host, _ = Pidfile.parse_pidfile(lkf)
+    Pidfile.isvalidpid(host, pid) || return false
+    return getpid() == Int(pid)
+end
+
+
 import Base.lock
 function Base.lock(f::Function, p::AbstractProject; kwargs...) 
     lkf = getlock(p)
     isnothing(lkf) && return f() # ignore locking
     mkpath(dirname(lkf))
-    pid, host, _ = Pidfile.parse_pidfile(lkf)
-    Pidfile.isvalidpid(host, pid) || rm(lkf; force = true)
+    _its_mypid(lkf) && return f()
     lk = mkpidlock(lkf; kwargs...) 
     try
         p.extras["_Pidfile.LockMonitor"] = lk
@@ -22,8 +33,7 @@ function Base.lock(p::AbstractProject; kwargs...)
     lkf = getlock(p)
     isnothing(lkf) && return # ignore locking 
     mkpath(dirname(lkf))
-    pid, host, _ = Pidfile.parse_pidfile(lkf)
-    Pidfile.isvalidpid(host, pid) || rm(lkf; force = true)
+    _its_mypid(lkf) && return get(p.extras, "_Pidfile.LockMonitor", nothing)
     lk = mkpidlock(lkf; kwargs...)
     p.extras["_Pidfile.LockMonitor"] = lk
     return p
@@ -37,8 +47,7 @@ function Base.islocked(p::AbstractProject)
     lk = get(p.extras, "_Pidfile.LockMonitor", nothing)
     !isnothing(lk) && isopen(lk.fd) && return true 
     # check others
-    pid, host, _ = Pidfile.parse_pidfile(lkf)
-    return Pidfile.isvalidpid(host, pid)
+    return _isvalid_pidfile(lkf)
 end
 
 import Base.unlock
