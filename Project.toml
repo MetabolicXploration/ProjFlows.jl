@@ -16,6 +16,7 @@ Logging = "56ddb016-857b-54e1-b83d-db4d58db5568"
 Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 Requires = "ae029012-a4dd-5104-9daa-d747884805df"
 Serialization = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
+SimpleLockFiles = "0c975e61-21d9-4454-8de5-ff08fd2c478f"
 
 [compat]
 julia = "1.5"

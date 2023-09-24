@@ -26,6 +26,7 @@ module ProjFlows
     using Base.Threads
     using FileWatching.Pidfile
     
+    using SimpleLockFiles
     using FilesTreeTools
     using DataFileNames
     using ContextDBs
