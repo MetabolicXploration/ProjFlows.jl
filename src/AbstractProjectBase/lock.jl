@@ -1,5 +1,5 @@
 _pidfile(p::AbstractProject) = joinpath(dotprojflow_dir(p), "p.pidfile")
-_getlock(p::AbstractProject) = get!(() -> SimpleLockFiles(_pidfile(p)), p.extras, "_lock")
+_getlock(p::AbstractProject) = get!(() -> SimpleLockFile(_pidfile(p)), p.extras, "_lock")
 _setlock!(p::AbstractProject, lk) = setindex!(p.extras, lk, "_lock")
 
 import Base.lock

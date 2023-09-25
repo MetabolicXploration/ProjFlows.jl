@@ -51,6 +51,7 @@ module ProjFlows
     include("Utils/extras_interface.jl")
     include("Utils/fileid.jl")
     include("Utils/group_files.jl")
+    include("Utils/parseARGS.jl")
     include("Utils/quickactivate.jl")
     include("Utils/save_load.jl")
     include("Utils/sfig_sgif.jl")
