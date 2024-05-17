@@ -28,3 +28,7 @@ MARKER_SHAPES = [:auto, :circle, :rect, :star5, :diamond, :hexagon, :cross, :xcr
 rand_color(n...) = rand(COLORS_ID, n...)
 rand_line_style(n...) = rand(LINES_STYLES, n...)
 rand_marker_shape(n...) = rand(MARKER_SHAPES, n...)
+
+
+## ----------------------------------------------------------------------------
+_noop(x...) = nothing

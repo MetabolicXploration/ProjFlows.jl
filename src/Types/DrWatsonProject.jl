@@ -3,7 +3,7 @@
 # From DrWatson.jl
 # function print_proj_layout()
 #     """
-#     │projectdir          <- Project's main folder. It is initialized as a Git
+#     │projdir          <- Project's main folder. It is initialized as a Git
 #     │                       repository with a reasonable .gitignore file.
 #     │
 #     ├── _research        <- WIP scripts, code, notes, comments,
