@@ -1,10 +1,6 @@
-# TODO: Wait for 'DataFileNames' update to add a DataFileNamer object per project
-
 # TODO: Think on a WIP feature
 
-# TODO: remove the dependencies on DrWatson (currently using only the git tag feature)
-
-# TODO: Add optional tags to cache
+# DONE: Add optional tags to cache
 
 # TODO: Integrate ContextDBs
 
@@ -16,12 +12,10 @@
 
 module ProjFlows
 
-    import DrWatson
     import Logging
     import Logging: SimpleLogger, global_logger, with_logger
     import Serialization: serialize, deserialize
     import FileIO
-    # import Requires: @require
     import Pkg
     using ExtractMacro
     using Base.Threads
@@ -31,7 +25,6 @@ module ProjFlows
     using SimpleLockFiles
     using FilesTreeTools
     using DataFileNames
-    using ContextDBs
 
     #! include .
     
