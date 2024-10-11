@@ -5,78 +5,98 @@ let
     fn = projpath(fn_args...)
     try
         # write
-        # always write, no cache
+        _didexec = false
         ref = datio(:write!, fn_args...) do
-            11
+            _didexec = true
+            :write!
         end
-        @test isempty(ref.cache)
-        @test ref[] == 11
-        @test ref[] == 11
+        @test _didexec
+        @test !isempty(ref.cache)
+        @test !isempty(ref.file)
+        @test ref[] == :write!
+        @test ref[] == :write!
         
         # read
-        # load + cache
+        _didexec = false
         ref = datio(:read, fn_args...) do
-            12
+            _didexec = true
+            :read
         end
+        @test !_didexec
         @test !isempty(ref.cache)
-        @test ref[] == 11
-        @test ref[] == 11
+        @test !isempty(ref.file)
+        @test ref[] == :write!
+        @test ref[] == :write!
         
         # get
-        # load | dflt & cache
+        # f() if !isfile
+        _didexec = false
         ref = datio(:get, fn_args...) do
-            18
+            _didexec = true
+            :get
         end
+        @test !_didexec
         @test !isempty(ref.cache)
-        @test ref[] == 11
-        @test ref[] == 11
+        @test !isempty(ref.file)
+        @test ref[] == :write! # file exist
         rm(fn; force = true)
-        @test !isfile(fn)
-        # load | dflt & cache
+        @assert !isfile(fn)
+        _didexec = false
         ref = datio(:get, fn_args...) do
-            18
+            _didexec = true
+            :get
         end
+        @test _didexec
+        @test !isfile(ref)
         @test !isempty(ref.cache)
         @test isempty(ref.file)
-        @test ref[] == 18
-        
-        # wget!
-        # always write + cache
-        ref = datio(:wget!, fn_args...) do
-            20
-        end
-        @test !isempty(ref.cache)
-        @test !isempty(ref.file)
-        @test ref[] == 20
-        @test ref[] == 20
-        
+        @test ref[] == :get
 
         # get!
-        # maybe write and always cache
+        # isfile ? read : !write
+        _didexec = false
         ref = datio(:get!, fn_args...) do
-            25
+            _didexec = true
+            :get!
         end
+        @test _didexec
         @test !isempty(ref.cache)
         @test !isempty(ref.file)
-        @test ref[] == 20
-        @test ref[] == 20
+        @test ref[] == :get!
+        _didexec = false
+        ref = datio(:get!, fn_args...) do
+            _didexec = true
+            get2!
+        end
+        @test !_didexec
+        @test !isempty(ref.cache)
+        @test !isempty(ref.file)
+        @test ref[] == :get!
+        @test ref[] == :get!
+        @test ref.data == :get!
+
+        # destructuring
         rm(fn; force = true)
-        ref = datio(:get!, fn_args...) do
-            123
+        _didexec = false
+        path, val = datio(:get!, fn_args...) do
+            _didexec = true
+            :get3!
         end
-        @test !isempty(ref.cache)
-        @test !isempty(ref.file)
-        @test ref[] == 123
-        @test ref[] == 123
+        @test _didexec
+        @test path == fn
+        @test val == :get3!
 
         # dry
         # maybe write and always cache
+        _didexec = false
         ref = datio(:dry, fn_args...) do
-            99
+            _didexec = true
+            :dry
         end
-        @test !isempty(ref.cache)
+        @test _didexec
+        @test !isempty(ref)
         @test isempty(ref.file)
-        @test ref[] == 99
+        @test ref[] == :dry
 
     finally
         rm(fn; force = true)

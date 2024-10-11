@@ -1,8 +1,8 @@
-__PROJ = AbstractProject[]
+const __PROJ = AbstractProject[]
 
 function globproj()
     isempty(__PROJ) && error("Project not set!, see `globproj!`")
-    first(__PROJ)
+    return first(__PROJ)
 end
 
 function globproj!(p::AbstractProject)
@@ -13,8 +13,11 @@ end
 
 function withproj(f::Function, p1::AbstractProject)
     p0 = globproj()
-    globproj!(p1)
-    ret = f()
-    globproj!(p0)
+    ret = nothing
+    try
+        globproj!(p1)
+        ret = f()
+        finally; globproj!(p0)
+    end
     return ret
 end

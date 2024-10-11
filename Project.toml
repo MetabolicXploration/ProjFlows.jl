@@ -4,13 +4,16 @@ authors = ["The members of MetabolicXploration"]
 version = "0.1.0"
 
 [deps]
+Bloberias = "c7313018-426c-4109-b567-6f433e2229c2"
 DataFileNames = "82dba31a-8ab6-430f-a22d-9cbb81344561"
 ExtractMacro = "f86d3d12-fd5b-522c-99e9-61577282a1e9"
 FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
 FileWatching = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
 FilesTreeTools = "638332cd-b357-4bf5-bfa2-3531168477f5"
 Logging = "56ddb016-857b-54e1-b83d-db4d58db5568"
+MassExport = "bdad8087-1bf2-41e1-917c-1d9e34c2a82c"
 Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
+Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
 Requires = "ae029012-a4dd-5104-9daa-d747884805df"
 Serialization = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
 SimpleLockFiles = "0c975e61-21d9-4454-8de5-ff08fd2c478f"

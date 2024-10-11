@@ -2,9 +2,9 @@
 
 # DONE: Add optional tags to cache
 
-# TODO: Integrate ContextDBs
+# TODO?: Integrate ContextDBs
 
-# TODO: Integrate BlobBatches
+# TODO?: Integrate BlobBatches
 
 # TODO: Integrate LRUCache.jl... Memoize.jl... DataStructures.jl... Just explore github.com/JuliaCollections
 
@@ -20,18 +20,21 @@ module ProjFlows
     using ExtractMacro
     using Base.Threads
     using FileWatching.Pidfile
+    using Reexport
     
     # import ImgTools
-    using SimpleLockFiles
-    using FilesTreeTools
-    using DataFileNames
+    @reexport using SimpleLockFiles
+    @reexport using FilesTreeTools
+    @reexport using DataFileNames
+    @reexport using Bloberias
+    @reexport using MassExport
 
     #! include .
     
     #! include Types
     include("Types/AbtractProjects.jl")
     include("Types/DrWatsonProject.jl")
-    include("Types/FileRef.jl")
+    include("Types/FileData.jl")
     include("Types/Project0s.jl")
     
     #! include AbstractProjectBase
@@ -44,7 +47,6 @@ module ProjFlows
     #! include Utils
     include("Utils/_io_print.jl")
     include("Utils/datio.jl")
-    include("Utils/exportall.jl")
     include("Utils/extras_interface.jl")
     include("Utils/fileid.jl")
     include("Utils/group_files.jl")
@@ -56,18 +58,19 @@ module ProjFlows
     # include("Utils/sfig_sgif.jl")
 
     #! include Project0Base
+    include("Project0Base/bloberias.jl")
     include("Project0Base/projdirs_interface.jl")
     include("Project0Base/save_load.jl")
     
-    #! include FileRefBase
-    include("FileRefBase/base.jl")
+    #! include FileDataBase
+    include("FileDataBase/base.jl")
     
     #! include GlobalInterface
     include("GlobalInterface/datio.jl")
     include("GlobalInterface/globproj.jl")
     include("GlobalInterface/projdirs_interface.jl")
 
-    @_exportall_non_underscore()
+    @exportall_non_underscore()
 
     function __init__()
         # TODO: do not load Plot packages if not required (not working now)
