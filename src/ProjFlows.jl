@@ -10,6 +10,15 @@
 
 # DONE: using Pidfile
 
+# DONE: Add @peeklite... we need a way to merge a dict
+# Maybe b[[]] .= @peeklite
+# What is wrong with merge!(b[["EP.v1]], @peeklite())?
+# mergescope!(b, "EP.v1; filter = :lite)?
+# DONE: Multithreading load/do
+# DONE: Multithreading search
+# DONE: ContextDB-like (pattern based + product Query) search interface
+
+
 module ProjFlows
 
     import Logging
