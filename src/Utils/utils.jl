@@ -20,6 +20,18 @@ function _extract_dir(args...)
 end
 
 ## ----------------------------------------------------------------------------
+# cool names
+function hashed_id(s::AbstractString, args...)
+    h0 = hash(0)
+    for a in args
+        h0 = hash(a, h0)
+    end
+    return string(s, h0)
+end
+hashed_id(s::Symbol, args...) = hashed_id(string(s), args...)
+hashed_id(arg, args...) = hashed_id("", arg, args...)
+
+## ----------------------------------------------------------------------------
 # Ploting
 COLORS_ID = [:red :green :blue :orange :purple :brown :cyan :magenta :black :gray :pink :gold :olive :navy :teal :maroon :indigo :turquoise :violet :coral]
 LINES_STYLES = [:solid, :dash, :dot, :dashdot, :dashdotdot]
