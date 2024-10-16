@@ -26,7 +26,7 @@ function hashed_id(s::AbstractString, args...)
     for a in args
         h0 = hash(a, h0)
     end
-    return string(s, h0)
+    return string(s, repr(h0))
 end
 hashed_id(s::Symbol, args...) = hashed_id(string(s), args...)
 hashed_id(arg, args...) = hashed_id("", arg, args...)
