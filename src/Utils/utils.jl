@@ -20,16 +20,24 @@ function _extract_dir(args...)
 end
 
 ## ----------------------------------------------------------------------------
-# cool names
-function hashed_id(s::AbstractString, args...)
-    h0 = hash(0)
-    for a in args
-        h0 = hash(a, h0)
+# hash utils
+
+# order is not important
+function combhash(comb...; h0 = zero(UInt))
+    h = h0
+    for x in comb
+        h ⊻= hash(x)
     end
-    return string(s, repr(h0))
+    return h
+end
+
+function hashed_id(s::AbstractString, args...)
+    h = combhash(args)
+    return isempty(s) ? repr(h) : string(s, ".", repr(h))
 end
 hashed_id(s::Symbol, args...) = hashed_id(string(s), args...)
 hashed_id(arg, args...) = hashed_id("", arg, args...)
+
 
 ## ----------------------------------------------------------------------------
 # Ploting

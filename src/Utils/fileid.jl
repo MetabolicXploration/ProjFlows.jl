@@ -1,3 +1,5 @@
+# ex: 3.0_hit.and.run.jl
+# fileid: "3.0"
 function _fileid_reg()
     dig = "\\d"
     num_seps = "[\\.-]"
