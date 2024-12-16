@@ -31,12 +31,10 @@ function combhash(comb...; h0 = zero(UInt))
     return h
 end
 
-function hashed_id(s::AbstractString, args...)
-    h = combhash(args)
-    return isempty(s) ? repr(h) : string(s, ".", repr(h))
-end
+hashed_id(s::AbstractString, args...) =
+    string(s, ".", repr(combhash(args))) 
 hashed_id(s::Symbol, args...) = hashed_id(string(s), args...)
-hashed_id(arg, args...) = hashed_id("", arg, args...)
+hashed_id(arg, args...) = hashed_id("a", arg, args...)
 
 
 ## ----------------------------------------------------------------------------
